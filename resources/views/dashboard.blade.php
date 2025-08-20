@@ -1,15 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('app')
+@section('title', 'Dashboard')
+@section('content')
+    <div class="row">
+        <div class="col-lg-6">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Belajar Laravel</title>
-</head>
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Example Card</h5>
+                    <p>This is an examle page with no contrnt. You can use it as a starter for your custom
+                        pages.</p>
+                </div>
+            </div>
 
-<body>
-    <h1>Selamat Datang : {{ auth()->user()->name }}</h1>
-</body>
+        </div>
 
-</html>
+        <div class="col-lg-6">
+
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Example Card</h5>
+                    <p>This is an examle page with no contrnt. You can use it as a starter for your custom
+                        pages.</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+@endsection
