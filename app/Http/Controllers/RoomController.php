@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use App\Models\Rooms;
 use App\Models\Categories;
+use PHPStan\PhpDocParser\Ast\PhpDoc\PureUnlessCallableIsImpureTagValueNode;
 
 class RoomController extends Controller
 {
@@ -67,7 +69,10 @@ class RoomController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $edit = Rooms::find($id);
+        $categories = Categories::get();
+        $title = "Ubah Data Kamar";
+        return view('room.edit', compact('edit', 'title', 'categories'));
     }
 
     /**
@@ -75,7 +80,26 @@ class RoomController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $data = [
+            'category_id'   => $request->category_id,
+            'name'          => $request->name,
+            'price'         => $request->price,
+            'facility'      => $request->facility,
+            'description'   => $request->description,
+        ];
+
+        $room = Rooms::find($id);
+
+        if ($request->hasFile('image_cover')) {
+            if ($room->image_cover && Storage::disk('public')->exists($room->image_cover)) {
+                Storage::disk('public')->delete($room->image_cover);
+            }
+
+            $data['image_cover'] = $request->file('image_cover')->store('rooms', 'public');
+        }
+
+        $room->update($data);
+        return redirect()->to('room');
     }
 
     /**
@@ -83,6 +107,12 @@ class RoomController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $room = Rooms::find($id);
+        if ($room->image_cover && Storage::disk('public')->exists($room->image_cover)) {
+            Storage::disk('public')->delete($room->image_cover);
+        }
+
+        $room->delete();
+        return redirect()->to('room');
     }
 }
