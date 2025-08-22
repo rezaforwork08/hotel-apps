@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\GuestController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -22,3 +23,8 @@ Route::get("tambah", [\App\Http\Controllers\BelajarController::class, 'tambah'])
 Route::get("kurang", [\App\Http\Controllers\BelajarController::class, 'kurang'])->name('kurang');
 Route::post('store_tambah', [\App\Http\Controllers\BelajarController::class, 'storeTambah'])->name('store_tambah');
 Route::post('store_kurang', [\App\Http\Controllers\BelajarController::class, 'storeKurang'])->name('store_kurang');
+
+Route::get("guestinformation", [GuestController::class, "index"]);
+Route::get("guestinformation/create", [GuestController::class, "create"]);
+Route::post("guestinformation/store", [GuestController::class, "store"])->name('guest.store');
+Route::get("guestinformation/edit/{id}", [GuestController::class, "edit"])->name("guest.edit");

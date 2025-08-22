@@ -86,6 +86,13 @@
                 </li>
             </ul>
         </li><!-- End Components Nav -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="{{ url('guestinformation') }}">
+                <i class="bi bi-person"></i>
+                <span>Guest Information</span>
+            </a>
+        </li>
+        {{-- <!-- End Profile Page Nav -->
 
         <li class="nav-item">
             <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
@@ -229,7 +236,7 @@
                 <i class="bi bi-file-earmark"></i>
                 <span>Blank</span>
             </a>
-        </li><!-- End Blank Page Nav -->
+        </li><!-- End Blank Page Nav --> --}}
 
     </ul>
 
