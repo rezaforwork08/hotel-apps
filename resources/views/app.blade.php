@@ -84,6 +84,50 @@
 
     <!-- Template Main JS File -->
     <script src="{{ asset('assets/js/main.js') }}"></script>
+    <script>
+        // variable
+        // let, var, const
+
+        let category_id = document.getElementById('category_id');
+
+        let roomId = document.getElementById('room_id');
+        category_id.addEventListener('change', async function() {
+            const id_category = this.value;
+
+            // fetch() / fetching yaitu ambil dta dari backend. Ajax
+            //  axios()
+            roomId.innerHTML = "<option  value=''>Pilih Kamar..</option>"
+            try {
+                const res = await fetch(`/get-room-by-category/${id_category}`);
+
+                const data = await res.json();
+
+                data.data.forEach(room => {
+                    // const option = `<option data-price=${room.price} value=${room.id}>${room.name}</option>`
+                    const option = document.createElement('option');
+                    option.value = room.id;
+                    option.textContent = `${room.name}`;
+                    option.setAttribute('data-price', room.price);
+                    roomId.appendChild(option);
+                });
+
+            } catch (error) {
+                console.log("error", error);
+
+            }
+
+        });
+
+        roomId.addEventListener('change', function() {
+            const selectedOption = this.options[this.selectedIndex];
+            const price = selectedOption.getAttribute('data-price') || 0;
+            const rupiah = new Intl.NumberFormat("id-ID", {
+                style: "currency",
+                currency: "IDR"
+            }).format(price);
+            document.getElementById('roomRate').textContent = rupiah
+        });
+    </script>
 
 </body>
 

@@ -92,6 +92,12 @@
                 <span>Guest Information</span>
             </a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="{{ route('reservation.index') }}">
+                <i class="bi bi-calendar"></i>
+                <span>Reservasi</span>
+            </a>
+        </li>
         {{-- <!-- End Profile Page Nav -->
 
         <li class="nav-item">
