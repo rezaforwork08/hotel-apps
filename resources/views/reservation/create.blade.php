@@ -9,6 +9,13 @@
                     <form action="{{ route('reservation.store') }}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="row">
+                            <div class="col-md-12">
+                                <div class="mb-3">
+                                    <label for="" class="form-label"> No Reservasi</label>
+                                    <input type="text" class="form-control" name="reservation_number"
+                                        placeholder="Masukkan Nama Tamu" value="{{ $reservation_number ?? '' }}" readonly>
+                                </div>
+                            </div>
                             <div class="col-lg-6">
                                 <div class="mb-3">
                                     <label for="" class="form-label">Nama Tamu *</label>
@@ -87,7 +94,7 @@
                                         <div class="d-flex justify-content-between">
                                             <span>Harga Kamar (Per malam)</span>
                                             <span id="roomRate">Rp.0</span>
-                                            <input type="text" id="roomRateVal">
+                                            <input type="hiddenx" id="roomRateVal">
                                         </div>
                                         <div class="d-flex justify-content-between">
                                             <span>Berapa Malam</span>
@@ -96,17 +103,17 @@
                                         <div class="d-flex justify-content-between">
                                             <span>Subtotal</span>
                                             <span id="subtotal">Rp.0</span>
-                                            <input type="text" id="subTotalVal">
+                                            <input type="hiddenx" id="subTotalVal">
                                         </div>
                                         <div class="d-flex justify-content-between">
                                             <span>Tax (10%)</span>
                                             <span id="tax">Rp.0</span>
-                                            <input type="text" id="taxVal">
+                                            <input type="hiddenx" id="taxVal">
                                         </div>
                                         <div class="d-flex justify-content-between">
                                             <span>Grandtotal</span>
                                             <span id="totalAmount">Rp.0</span>
-                                            <input type="text" id="totalAmountVal">
+                                            <input type="hiddenx" id="totalAmountVal">
                                         </div>
                                     </div>
                                 </div>

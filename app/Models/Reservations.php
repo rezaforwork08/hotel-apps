@@ -25,4 +25,43 @@ class Reservations extends Model
         'subtotal',
         'totalAmount',
     ];
+
+    protected $append = ['isReserved_text', 'isReserved_class'];
+
+    public function getIsReservedClassAttribute()
+    {
+        switch ($this->isReserve) {
+            case '1':
+                return "badge text-bg-success";
+                break;
+            case '2':
+                return "badge text-bg-secondary";
+                break;
+
+            default:
+                return "badge text-bg-warning";
+                break;
+        }
+    }
+
+    public function getIsReservedTextAttribute()
+    {
+        switch ($this->isReserve) {
+            case '1':
+                return "Confirm";
+                break;
+            case '2':
+                return "Cancel";
+                break;
+
+            default:
+                return "Pending";
+                break;
+        }
+    }
+
+    public function room()
+    {
+        return $this->belongsTo(Rooms::class, 'room_id', 'id');
+    }
 }
