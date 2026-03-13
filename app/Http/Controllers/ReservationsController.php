@@ -7,6 +7,7 @@ use App\Models\Reservations;
 use App\Models\Rooms;
 use App\Models\Categories;
 use Carbon\Carbon;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class ReservationsController extends Controller
 {
@@ -26,7 +27,7 @@ class ReservationsController extends Controller
         if ($lastReservation) {
             $lastNumber = substr($lastReservation->reservation_number, -3); //rsv-0001
             // $lastNumber = $lastReservation->id; //4
-            $newNumber  = str_pad($lastNumber,  3, "0", STR_PAD_LEFT); //004
+            $newNumber  = str_pad($lastNumber + 1,  3, "0", STR_PAD_LEFT); //004
         } else {
             $newNumber = "001";
         }
@@ -58,55 +59,40 @@ class ReservationsController extends Controller
     public function store(Request $request)
     {
         // output : RSV-tgl hari ini - 001
-        $reservation_number = "RSV-270893-001";
+        // return $request;
         try {
-            // $data = $request->validate([
-            //     'reservation_number' => 'required',
-            //     'guest_name' => 'required',
-            //     'guest_email' => 'required|email',
-            //     'guest_phone' => 'required',
-            //     'guest_note' => 'nullable|string',
-            //     'guest_room_number' => 'nullable|string',
-            //     'guest_check_in' => 'required|date',
-            //     'guest_check_out' => 'required|date|after:checkin',
-            //     'payment_method' => 'required',
-            //     'room_id' => 'required',
-            //     'subtotal' => 'required',
-            //     'totalAmount' => 'required',
-            // ]);
 
             $data = [
                 'reservation_number' => $request->reservation_number,
-                'guest_name' => $request->guest_name,
+                'first_name' => $request->first_name,
+                'last_name' => $request->last_name,
+                'guest_origin' => $request->guest_origin,
                 'guest_email' => $request->guest_email,
                 'guest_phone' => $request->guest_phone,
                 'guest_note' => $request->guest_note,
                 'guest_room_number' => $request->guest_room_number,
                 'guest_check_in' => $request->guest_check_in,
                 'guest_check_out' => $request->guest_check_out,
+                'guest_status' => $request->guest_status,
                 'payment_method' => $request->payment_method,
                 'room_id' => $request->room_id,
                 'subtotal' => $request->subtotal,
                 'totalAmount' =>  $request->totalAmount,
             ];
+
+            if ($request->hasFile('guest_file')) {
+                $data['guest_file'] = $request->file('guest_file')->store("rooms", "guest");
+            }
             $create = Reservations::create($data);
-            return response()
-                ->json(
-                    ['status' => 'success', 'message' => 'Reservasi create success', 'data' => $create],
-                    201
-                );
-        } catch (\Illuminate\Validation\ValidationException $e) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Validation error',
-                'error' => $e->errors()
-            ], 422);
+            return redirect()->to('reservation')->with('reservation_number', $create->reservation_number);
         } catch (\Exception $e) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Something went wrong',
-                'error' => $e->getMessage()
-            ], 500);
+            toast($e->getMessage(), 'error');
+            return redirect()->route('reservation.create');
+            // return response()->json([
+            //     'status' => 'error',
+            //     'message' => 'Something went wrong',
+            //     'error' => $e->getMessage()
+            // ], 500);
         }
     }
 
@@ -150,5 +136,12 @@ class ReservationsController extends Controller
         } catch (\Throwable $th) {
             return response()->json(['message' => 'Errrorrrrr', 'error' => $th->getMessage()]);
         }
+    }
+
+    public function print($reservation_number)
+    {
+        // return $reservation_number;
+        $reservation = Reservations::with('room')->where('reservation_number', $reservation_number)->firstOrFail();
+        return view('reservation.print', compact('reservation'));
     }
 }

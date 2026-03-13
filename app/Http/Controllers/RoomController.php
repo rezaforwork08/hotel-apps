@@ -44,6 +44,8 @@ class RoomController extends Controller
             'price'         => $request->price,
             'facility'      => $request->facility,
             'description'   => $request->description,
+            'room_number'   => $request->room_number,
+            'room_status'   => $request->room_status,
         ];
 
         // $request->file('image_cover')
@@ -86,6 +88,8 @@ class RoomController extends Controller
             'price'         => $request->price,
             'facility'      => $request->facility,
             'description'   => $request->description,
+            'room_number'   => $request->room_number,
+            'room_status'   => $request->room_status,
         ];
 
         $room = Rooms::find($id);

@@ -12,7 +12,9 @@ class Rooms extends Model
         'price',
         'facility',
         'description',
-        'image_cover'
+        'image_cover',
+        'room_number',
+        'room_status',
     ];
 
     public function category()

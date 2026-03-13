@@ -9,6 +9,19 @@
                     <form action="{{ route('room.store') }}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="mb-3">
+                            <label for="" class="form-label">Status *</label>
+                            <select name="room_status" id="" class="form-control">
+                                <option value="1">Open</option>
+                                <option value="2">Booked</option>
+                                <option value="0">Inactive</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="" class="form-label">Nomor Kamar *</label>
+                            <input type="number" class="form-control" name="room_number" required
+                                placeholder="Nomor Kamar">
+                        </div>
+                        <div class="mb-3">
                             <label for="" class="form-label">Kategori Kamar *</label>
                             <select name="category_id" id="" class="form-control">
                                 <option value="">Pilih Kategori Kamar</option>

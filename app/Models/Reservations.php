@@ -8,10 +8,10 @@ class Reservations extends Model
 {
     //
     protected $fillable = [
-        'guest_name',
+        'first_name',
+        'last_name',
         'guest_phone',
         'guest_email',
-        'guest_room_number',
         'guest_note',
         'guest_check_in',
         'guest_check_out',
@@ -26,7 +26,7 @@ class Reservations extends Model
         'totalAmount',
     ];
 
-    protected $append = ['isReserved_text', 'isReserved_class'];
+    protected $append = ['isReserved_text', 'isReserved_class', 'status_text', 'status_aclass'];
 
     public function getIsReservedClassAttribute()
     {
@@ -56,6 +56,42 @@ class Reservations extends Model
 
             default:
                 return "Pending";
+                break;
+        }
+    }
+
+    public function getStatusClassAttribute()
+    {
+        switch ($this->guest_status) {
+            case 'booked':
+                return "badge text-bg-success";
+                break;
+            case 'cancelled':
+                return "badge text-bg-warning";
+                break;
+            case 'checkin':
+                return "badge text-bg-success";
+                break;
+            case 'checkout':
+                return "badge text-bg-danger";
+                break;
+        }
+    }
+
+    public function getStatusTextAttribute()
+    {
+        switch ($this->guest_status) {
+            case 'booked':
+                return "Booked";
+                break;
+            case 'cancelled':
+                return "Cancelled";
+                break;
+            case 'checkin':
+                return "CheckIn";
+                break;
+            case 'checkout':
+                return "CheckOut";
                 break;
         }
     }

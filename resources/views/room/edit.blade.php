@@ -10,6 +10,12 @@
                         @csrf
                         @method('PUT')
                         <div class="mb-3">
+                            <label for="" class="form-label">Nomor Kamar *</label>
+                            <input type="number" class="form-control" name="room_number" required placeholder="Nomor Kamar"
+                                value="{{ $edit->room_number ?? '' }}">
+                        </div>
+                        <div class="mb-3">
+
                             <label for="" class="form-label">Kategori Kamar *</label>
                             <select name="category_id" id="" class="form-control">
                                 <option value="">Pilih Kategori Kamar</option>
